@@ -1,8 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import  { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const history = useNavigate();
+
+    useEffect(()=>{
+        const localdata = localStorage.getItem('token');
+        if(localdata){
+          history('/dashboard');       
+        }
+      },[])
 
     const loginUser = async(e) =>{
         e.preventDefault()
@@ -19,15 +29,18 @@ const SignIn = () => {
         })
 
         const data = await response.json();
+        console.log(data)
+        
 
-        if(data.user){
+        if(data.status === true){
+            localStorage.setItem('token', data.token);
             
             alert("Login Sccessfull");
             window.location.href = '/dashboard'
         }else{
             alert("check username or password")
         }
-
+        
         console.log(data);
     }
 

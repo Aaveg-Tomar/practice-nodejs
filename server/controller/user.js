@@ -3,17 +3,20 @@ const  jwt  = require('jsonwebtoken')
 
 
 const handleUserLogin = async(req , res) =>{
-    const user =  await User.findOne({
+    const userExist =  await User.findOne({
         email : req.body.email,
         password : req.body.password,
        })
        
-       if(user){
-        const token = jwt.sign({
-            email : user.email,
-            name : user.name,
-        } , 'abc123')
-        return res.json({status : 'ok' , user : token})
+       if(userExist){
+        const token = await userExist.generateToken();
+        res.cookie("jwt", token);
+
+         return res.json({
+            status: true,
+            token: token,
+            id: userExist._id,
+          });
        }else{
         return res.json({status : 'error'  , user :  false})
        }

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 
-const UserSchema = new mongoose.Schema({
-    username: {
+const CompanySchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
     },
@@ -16,23 +16,27 @@ const UserSchema = new mongoose.Schema({
         required: true,
     }, 
     token: {
-        type: String,   
-    },
-    collegeName : {
         type: String,
-        required : true
+        
     },
-    FullName : {
-        type : String,
-        required : true,
-    },
-    phnNumber  : {
-        type : Number,
-        required : true,
-        unique : true,
-    },
+    companyName :{
+        type:String,
+        required:true,
 
-    userMarks : {
+    },
+    jobDescription : {
+        type: String,
+        required : true,
+    },
+    jobTitle : {
+        type: String,
+        required : true,
+    },
+    jobLocation : {
+        type: String,
+        required : true,
+    },
+    jobEligibility: {
         marks10th: {
             type: Number,
             required: true,
@@ -45,11 +49,11 @@ const UserSchema = new mongoose.Schema({
             type: Number,
             required: true,
         }
-    },
-
+    }
+    
 });
 
-UserSchema.methods.generateToken = async function() {
+CompanySchema.methods.generateToken = async function() {
     try {
         const token = jwt.sign({_id: this._id}, 'abc');
         this.token = token;
@@ -61,8 +65,8 @@ UserSchema.methods.generateToken = async function() {
     }
 }
 
-const User = mongoose.model('UserData', UserSchema);
+const Company = mongoose.model('CompanyData', CompanySchema);
 
 module.exports = {
-    User,
+    Company,
 }
