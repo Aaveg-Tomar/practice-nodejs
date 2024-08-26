@@ -3,7 +3,7 @@ import { useNavigate} from 'react-router-dom';
 
 const SignUp = () => {
     const history = useNavigate();
-    const [name, setName] = useState('');
+    const [userName, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -19,7 +19,7 @@ const SignUp = () => {
             },
 
             body : JSON.stringify({
-                name,
+                userName,
                 email,
                 password,
             })
@@ -38,7 +38,7 @@ const SignUp = () => {
         <div>
             <h1>Register</h1>
             <form onSubmit={registerUser}>
-                <input value={name} 
+                <input value={userName} 
                 onChange={(e) => setName(e.target.value)}
                 type='text' 
                 placeholder='Name' />
