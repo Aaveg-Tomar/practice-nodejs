@@ -4,7 +4,7 @@ import FileUpload from '../components/FileUpload'
 const UserFrom = () => {
   const [fullName, setFullName] = useState('');
   const [collegeName, setCollegeName] = useState('');
-  const [phnNumber, setPhnNumber] = useState('');
+  const [phnNumber, setPhnNumber] = useState(null);
   const [marks10th, setMarks10th] = useState('');
   const [marks12th, setMarks12th] = useState('');
   const [btechMarks, setBtechMarks] = useState('');
@@ -26,7 +26,7 @@ const UserFrom = () => {
     };
 
     try {
-      const response = await fetch('/api/user/details', { 
+      const response = await fetch('/api/user/details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,47 +45,62 @@ const UserFrom = () => {
     }
   };
 
-  
+
 
   return (
     <>
-      <div>UserForm</div>
       <div>UserDetails</div>
       <form onSubmit={handleSubmit}>
         <label>Enter Full Name</label>
-        <input 
-          type="text" 
-          placeholder="Enter the name" 
-          value={fullName} 
+        <input
+          type="text"
+          placeholder="Enter the name"
+          value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
-        
+
+        <label>Enter Mobile Number</label>
+        <input
+          type="number"
+          placeholder="9758XXXXXX"
+          value={phnNumber}
+          onChange={(e) => setPhnNumber(e.target.value)}
+        />
+
+        <label>Enter College Name</label>
+        <input
+          type="text"
+          placeholder="XYZ  College"
+          value={collegeName}
+          onChange={(e) =>  setCollegeName(e.target.value)}
+        />
+
         <label>Enter 10th Marks</label>
-        <input 
-          type="number" 
-          placeholder="Enter 10th marks" 
-          value={marks10th} 
+        <input
+          type="number"
+          placeholder="Enter 10th marks"
+          value={marks10th}
           onChange={(e) => setMarks10th(e.target.value)}
         />
-        
+
         <label>Enter 12th Marks</label>
-        <input 
-          type="number" 
-          placeholder="Enter 12th marks" 
-          value={marks12th} 
+        <input
+          type="number"
+          placeholder="Enter 12th marks"
+          value={marks12th}
           onChange={(e) => setMarks12th(e.target.value)}
         />
-        
+
         <label>Enter B.Tech Marks</label>
-        <input 
-          type="number" 
-          placeholder="Enter B.Tech marks" 
-          value={btechMarks} 
+        <input
+          type="number"
+          placeholder="Enter B.Tech marks"
+          value={btechMarks}
           onChange={(e) => setBtechMarks(e.target.value)}
         />
 
-        <FileUpload />
-
+        <p> Upload the Resume </p> 
+        <FileUpload/>
         <button type="submit">Submit</button>
       </form>
     </>

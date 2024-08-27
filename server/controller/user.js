@@ -75,4 +75,5 @@ const handleUserDetails = async (req, res) => {
 module.exports = {
     handleUserLogin,
     handleUserSignUp,
+    handleUserDetails,
 }

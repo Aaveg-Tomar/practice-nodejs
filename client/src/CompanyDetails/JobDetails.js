@@ -6,4 +6,4 @@ const JobDetails = () => {
   )
 }
 
-export default JobDetails
+export default JobDetails;
