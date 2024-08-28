@@ -1,5 +1,7 @@
-const { User } = require("../model/user")
+const { User } = require("../model/user");
+const { UserDetail } = require("../model/userdetail");
 const jwt = require('jsonwebtoken')
+
 
 
 const handleUserLogin = async (req, res) => {
@@ -10,7 +12,9 @@ const handleUserLogin = async (req, res) => {
 
     if (userExist) {
         const token = await userExist.generateToken();
-        res.cookie("jwt", token);
+        res.cookie("jwt", token , {
+            maxAge: 24 * 60 * 60 * 1000
+        });
 
         return res.json({
             status: true,
@@ -43,14 +47,17 @@ const handleUserSignUp = async (req, res) => {
 
 
 const handleUserDetails = async (req, res) => {
-    const token = req.cookies.jwt;
-    if (!token) {
-        return res.json({ status: 'error', user: false });
-    }
+    // const token = req.cookies.jwt;
+    // if (!token) {
+    //     return res.status(401).json({ status: 'error', message: 'User not authenticated' });
+    // }
+
     try {
-        const user = jwt.verify(token, 'abc'); // Verify token and extract user ID
-        const userdetails = await User.findOneAndUpdate(
-            { _id: user._id }, // Find the user by ID
+        // const decoded = jwt.verify(token, 'abc'); 
+        // const userId = decoded._id;
+
+        const userDetails = await UserDetail.findOneAndUpdate(
+            { _id: _id },
             {
                 fullName: req.body.fullName,
                 collegeName: req.body.collegeName,
@@ -61,12 +68,13 @@ const handleUserDetails = async (req, res) => {
                     btechMarks: req.body.btechMarks,
                 }
             },
-            { new: true, upsert: true } // Create a new record if one doesn't exist
+            { new: true, upsert: true } // Create a new document if none exists
         );
-        res.json({ status: 'ok', user: userdetails });
+
+        res.json({ status: 'ok', user: userDetails });
     } catch (err) {
         console.error(err);
-        res.json({ status: 'error', user: false });
+        res.status(500).json({ status: 'error', message: 'Server error' });
     }
 };
 

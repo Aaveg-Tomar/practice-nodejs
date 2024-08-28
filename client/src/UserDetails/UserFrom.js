@@ -4,7 +4,7 @@ import FileUpload from '../components/FileUpload'
 const UserFrom = () => {
   const [fullName, setFullName] = useState('');
   const [collegeName, setCollegeName] = useState('');
-  const [phnNumber, setPhnNumber] = useState(null);
+  const [phnNumber, setPhnNumber] = useState(0);
   const [marks10th, setMarks10th] = useState('');
   const [marks12th, setMarks12th] = useState('');
   const [btechMarks, setBtechMarks] = useState('');
@@ -26,7 +26,7 @@ const UserFrom = () => {
     };
 
     try {
-      const response = await fetch('/api/user/details', {
+      const response = await fetch('http://localhost:8000/api/userform', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

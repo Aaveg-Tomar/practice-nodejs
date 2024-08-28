@@ -2,10 +2,12 @@ const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 
 const UserDetailsSchema = new mongoose.Schema({
-    token: {
-        type: String,
-        
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
+    
     collegeName : {
         type: String,
         required : true

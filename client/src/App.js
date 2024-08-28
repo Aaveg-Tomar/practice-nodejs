@@ -8,6 +8,7 @@ import CSignUp from "./CompanyDetails/CSignUp";
 import UserFrom from "./UserDetails/UserFrom";
 import UserProfile from "./UserDetails/UserProfile";
 import JobDetail from "./jobdetails/JobDetail";
+import SignUp from "./UserDetails/SignUp"
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/signIn" Component={ SignIn} />
-          <Route path="/signUp" Component={SignOut} />
+          <Route path="/signUp" Component={SignUp} />
           <Route path="/" Component={Dashboard}/>
           <Route path="/csignIn" Component={CSignIn}/>
           <Route path="/csignUp" Component={CSignUp}/>

@@ -3,8 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const JobDetailSchema = new mongoose.Schema({
     token: {
-        type: String,
-        
+        type: String, 
     },
     companyName :{
         type:String,
@@ -23,6 +22,15 @@ const JobDetailSchema = new mongoose.Schema({
         type: String,
         required : true,
     },
+    salary : {
+        type: Number,
+        required : true,
+    },
+    bondPeriod : {
+
+        type : String,
+        required : true
+    },
     jobEligibility: {
         marks10th: {
             type: Number,
@@ -39,6 +47,7 @@ const JobDetailSchema = new mongoose.Schema({
     }
     
 });
+
 
 
 const JobDetail = mongoose.model('JobDetail', JobDetailSchema);
