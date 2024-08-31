@@ -35,6 +35,10 @@ const handleUserSignUp = async (req, res) => {
             email: req.body.email,
             password: req.body.password
         })
+        console.log(user);
+        
+        await user.save();
+
         res.json({ status: 'ok' });
 
     } catch (err) {
@@ -55,9 +59,14 @@ const handleUserDetails = async (req, res) => {
     try {
         // const decoded = jwt.verify(token, 'abc'); 
         // const userId = decoded._id;
-
+        const email=req.body.email;
+        const user = await User.findOne({ email: email });
+        if(!user){
+            return res.json({ status: 'error email/user not available', user: false })
+        }
+       
         const userDetails = await UserDetail.findOneAndUpdate(
-            { _id: _id },
+            { userId:user._id },
             {
                 fullName: req.body.fullName,
                 collegeName: req.body.collegeName,
@@ -71,6 +80,9 @@ const handleUserDetails = async (req, res) => {
             { new: true, upsert: true } // Create a new document if none exists
         );
 
+        const userAvailable=await UserDetail.find({userId:user._id}).populate('userId');
+        console.log(userAvailable);
+        
         res.json({ status: 'ok', user: userDetails });
     } catch (err) {
         console.error(err);
