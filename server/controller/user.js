@@ -12,8 +12,9 @@ const handleUserLogin = async (req, res) => {
 
     if (userExist) {
         const token = await userExist.generateToken();
-        res.cookie("jwt", token , {
-            maxAge: 24 * 60 * 60 * 1000
+        await res.cookie("jwt", token , {
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: false, 
         });
 
         return res.json({
