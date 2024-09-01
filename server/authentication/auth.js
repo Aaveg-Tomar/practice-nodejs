@@ -3,13 +3,14 @@ const { Company } = require('../model/company');
 const { User } = require('../model/user');
 
 const authuser = async(req , res , next) =>{
-    let token = req.headers.authorization;
+    // let token = req.headers.Authorization;
+    let token=req.cookies.jwt;
     if(!token){
         res.status(401).send("Authorization Fails")
     }
-    if(token.startsWith('Bearer ')){
-        token=token.split(' ')[1];
-    }
+    // if(token.startsWith('Bearer ')){
+    //     token=token.split(' ')[1];
+    // }
     const verify=jwt.verify(token,'abc');
     const userExist=await User.findOne({_id:verify._id,token});
     if(!userExist){
@@ -25,14 +26,14 @@ const authuser = async(req , res , next) =>{
 
 
 const authCompany = async(req , res , next) =>{
-    let token = req.headers.authorization;  // let is used  here because the token value is changed  in each request
+    let token=req.cookies.jwt;  // let is used  here because the token value is changed  in each request
 
     if(!token){
         res.status(401).send("Authorization Fails")
     }
-    if(token.startsWith('Bearer ')){
-        token=token.split(' ')[1];          
-    }
+    // if(token.startsWith('Bearer ')){
+    //     token=token.split(' ')[1];          
+    // }
     const verify=jwt.verify(token,'abc');
     const companyExist = await Company.findOne({_id:verify._id,token});
     if(!companyExist){

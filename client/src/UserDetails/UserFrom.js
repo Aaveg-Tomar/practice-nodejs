@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import FileUpload from '../components/FileUpload'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import axios from 'axios'
 
 const UserFrom = () => {
   const navigate = useNavigate();
@@ -44,19 +45,23 @@ const UserFrom = () => {
     };
 
     try {
-      const token = Cookies.get('jwt');
-      const response = await fetch('http://localhost:8000/api/userform', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(data),
-      });
+      // const token = Cookies.get('jwt');
+      // const response = await fetch('http://localhost:8000/api/userform', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${token}`
+      //   },
+      //   body: JSON.stringify(data),
+      // });
+      const response=await axios.post('http://localhost:8000/api/userform',data, {
+        withCredentials: true
+    });
 
-      const userres = await response.json();
-      if (userres.status === 'ok') {
-        console.log('User details saved:', userres.user);
+
+      // const userres = await response.json();
+      if (response.data.status === 'ok') {
+        console.log('User details saved:', response.data.user);
         navigate('/userProfile')
       } else {
         console.log('Error saving user details');
