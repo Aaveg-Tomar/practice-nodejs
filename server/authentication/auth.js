@@ -25,12 +25,13 @@ const authuser = async(req , res , next) =>{
 
 
 const authCompany = async(req , res , next) =>{
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;  // let is used  here because the token value is changed  in each request
+
     if(!token){
         res.status(401).send("Authorization Fails")
     }
     if(token.startsWith('Bearer ')){
-        token=token.split(' ')[1];
+        token=token.split(' ')[1];          
     }
     const verify=jwt.verify(token,'abc');
     const companyExist = await Company.findOne({_id:verify._id,token});
@@ -43,8 +44,6 @@ const authCompany = async(req , res , next) =>{
     req.companyId=companyExist._id;
     next();
 }
-
-
 
 
 module.exports = {

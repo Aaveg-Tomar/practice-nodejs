@@ -12,6 +12,11 @@ import SignUp from "./UserDetails/SignUp"
 
 
 function App() {
+
+  
+
+
+
   return (
     <>
       <Router>

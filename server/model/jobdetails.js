@@ -2,8 +2,10 @@ const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 
 const JobDetailSchema = new mongoose.Schema({
-    token: {
-        type: String, 
+    companyId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CompanyData',
+        required: true,
     },
     companyName :{
         type:String,

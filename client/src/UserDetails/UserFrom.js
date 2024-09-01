@@ -16,17 +16,7 @@ const UserFrom = () => {
 
   },[])
 
-  // useEffect(() => {
-        
-    //     const token = Cookies.get('jwt');
-    //     console.log(token);
-    //     console.log('hellll');
-        
-    //     if (token) {
-    //           navigate('/signin');
-    //     }
-    // }, [history]);
-   
+
 
   const [fullName, setFullName] = useState('');
   const [collegeName, setCollegeName] = useState('');
@@ -67,7 +57,7 @@ const UserFrom = () => {
       const userres = await response.json();
       if (userres.status === 'ok') {
         console.log('User details saved:', userres.user);
-        navigate('userProfile')
+        navigate('/userProfile')
       } else {
         console.log('Error saving user details');
       }

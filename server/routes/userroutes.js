@@ -5,6 +5,7 @@ const {
     handleUserSignUp,
     handleUserDetails,
 } = require('../controller/user');
+
 const { authuser } = require("../authentication/auth");
 
 

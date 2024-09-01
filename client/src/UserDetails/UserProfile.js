@@ -15,9 +15,6 @@ const UserProfile = () => {
 
   })
 
-  useEffect(()=>{
-    const userdetails = axios.get("")
-  })
 
 
   return (
