@@ -51,14 +51,9 @@ const handleUserSignUp = async (req, res) => {
 
 
 const handleUserDetails = async (req, res) => {
-    // const token = req.cookies.jwt;
-    // if (!token) {
-    //     return res.status(401).json({ status: 'error', message: 'User not authenticated' });
-    // }
-
+    
     try {
-        // const decoded = jwt.verify(token, 'abc'); 
-        // const userId = decoded._id;
+        
         const email=req.body.email;
         const user = await User.findOne({ email: email });
         if(!user){
