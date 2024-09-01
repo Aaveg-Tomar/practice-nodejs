@@ -68,9 +68,9 @@ const handleUserDetails = async (req, res) => {
                 collegeName: req.body.collegeName,
                 phnNumber: req.body.phnNumber,
                 userMarks: {
-                    marks10th: req.body.marks10th,
-                    marks12th: req.body.marks12th,
-                    btechMarks: req.body.btechMarks,
+                    marks10th: req.body.userMarks.marks10th,
+                    marks12th: req.body.userMarks.marks12th,
+                    btechMarks: req.body.userMarks.btechMarks,
                 }
             },
             { new: true, upsert: true } // Create a new document if none exists
