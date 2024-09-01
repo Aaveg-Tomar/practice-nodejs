@@ -3,7 +3,7 @@ const { Company } = require('../model/company');
 const { User } = require('../model/user');
 
 const authuser = async(req , res , next) =>{
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;
     if(!token){
         res.status(401).send("Authorization Fails")
     }
@@ -11,7 +11,7 @@ const authuser = async(req , res , next) =>{
         token=token.split(' ')[1];
     }
     const verify=jwt.verify(token,'abc');
-    const userExist=await User.findOne({_id:verify._id,tokens:token});
+    const userExist=await User.findOne({_id:verify._id,token});
     if(!userExist){
         throw new Error("User Not Found");
     }
@@ -33,7 +33,7 @@ const authCompany = async(req , res , next) =>{
         token=token.split(' ')[1];
     }
     const verify=jwt.verify(token,'abc');
-    const companyExist = await Company.findOne({_id:verify._id,tokens:token});
+    const companyExist = await Company.findOne({_id:verify._id,token});
     if(!companyExist){
         throw new Error("User Not Found");
     }

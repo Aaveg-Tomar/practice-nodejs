@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FileUpload from '../components/FileUpload'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 const UserFrom = () => {
   const navigate = useNavigate();
@@ -15,6 +16,17 @@ const UserFrom = () => {
 
   },[])
 
+  // useEffect(() => {
+        
+    //     const token = Cookies.get('jwt');
+    //     console.log(token);
+    //     console.log('hellll');
+        
+    //     if (token) {
+    //           navigate('/signin');
+    //     }
+    // }, [history]);
+   
 
   const [fullName, setFullName] = useState('');
   const [collegeName, setCollegeName] = useState('');
@@ -42,10 +54,12 @@ const UserFrom = () => {
     };
 
     try {
+      const token = Cookies.get('jwt');
       const response = await fetch('http://localhost:8000/api/userform', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data),
       });

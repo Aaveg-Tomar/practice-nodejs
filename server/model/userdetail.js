@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 
 const UserDetailsSchema = new mongoose.Schema({
-    userdetailID: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserData',
         required: true,
