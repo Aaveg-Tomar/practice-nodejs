@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import  { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import axios from 'axios'
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -7,33 +9,49 @@ const SignIn = () => {
 
     const history = useNavigate();
 
-    useEffect(()=>{
-        const localdata = localStorage.getItem('token');
-        if(localdata){
-          history('/dashboard');       
+    // useEffect(()=>{
+    //     const localdata = localStorage.getItem('token');
+    //     if(localdata){
+    //       history('/dashboard');       
+    //     }
+    //   },[])
+    useEffect(() => {
+        
+        const token = Cookies.get('jwt');
+        console.log(token);
+        console.log('hellll');
+        
+        if (token) {
+            history('/dashboard');
         }
-      },[])
+    }, [history]);
+
+   
+    
 
     const loginUser = async(e) =>{
         e.preventDefault()
-        const response = await fetch('http://localhost:8000/api/login' , {
-            method: 'POST',
-            headers : {
-                'Content-Type' : 'application/json'
-            },
+        const dataSend={email,password}
+        // const response = await fetch('http://localhost:8000/api/login' , {
+        //     method: 'POST',
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // },
+        // body: JSON.stringify({
+        //     email,
+        //     password,
+        // }),
+        // })
+        const response=await axios.post('http://localhost:8000/api/login',dataSend, {
+            withCredentials: true // Make sure to include credentials in the request
+        });
 
-            body : JSON.stringify({
-                email,
-                password,
-            })
-        })
-
-        const data = await response.json();
-        console.log(data)
+        const data =  response;
+        console.log(data.data)
         
 
-        if(data.status === true){
-            localStorage.setItem('token', data.token);
+        if(data.data.status === true){
+            localStorage.setItem('token', data.data.token);
             
             alert("Login Sccessfull");
             window.location.href = '/dashboard'
