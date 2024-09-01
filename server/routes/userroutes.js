@@ -5,21 +5,13 @@ const {
     handleUserSignUp,
     handleUserDetails,
 } = require('../controller/user');
+const { authuser } = require("../authentication/auth");
 
-const {
-    handleCompanyLogin,
-    handleCompanySignUp
-} = require('../controller/company');
 
 const router = express.Router();
 
 router.post('/register',handleUserSignUp);
 router.post('/login' , handleUserLogin);
-router.post('/userform' , handleUserDetails);
-
-
-router.post('/cregister',handleCompanySignUp);
-router.post('/clogin' , handleCompanyLogin);
-
+router.post('/userform' , authuser , handleUserDetails);
 
 module.exports = router;

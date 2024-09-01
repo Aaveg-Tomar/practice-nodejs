@@ -8,7 +8,9 @@ const SignOut = () => {
     const  handleSignOut = () => {
         // Sign out logic here
         localStorage.removeItem('token');
-        history('/signin');     
+        history('/signin'); 
+        
+
     }
   return (
     <div>

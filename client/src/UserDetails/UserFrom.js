@@ -1,13 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FileUpload from '../components/FileUpload'
+import { useNavigate } from 'react-router-dom'
 
 const UserFrom = () => {
+  const navigate = useNavigate();
+
+
+  useEffect(()=>{
+    const userlogin =  localStorage.getItem('token');
+    if(!userlogin){
+      navigate('/signin');
+    }
+
+
+  },[])
+
+
   const [fullName, setFullName] = useState('');
   const [collegeName, setCollegeName] = useState('');
   const [phnNumber, setPhnNumber] = useState(0);
   const [marks10th, setMarks10th] = useState('');
   const [marks12th, setMarks12th] = useState('');
   const [btechMarks, setBtechMarks] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +38,7 @@ const UserFrom = () => {
       collegeName,
       phnNumber,
       userMarks,
+      email,
     };
 
     try {
@@ -37,6 +53,7 @@ const UserFrom = () => {
       const userres = await response.json();
       if (userres.status === 'ok') {
         console.log('User details saved:', userres.user);
+        navigate('userProfile')
       } else {
         console.log('Error saving user details');
       }
@@ -59,6 +76,13 @@ const UserFrom = () => {
           onChange={(e) => setFullName(e.target.value)}
         />
 
+        <input
+          type="text"
+          placeholder="Enter the email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
         <label>Enter Mobile Number</label>
         <input
           type="number"
@@ -72,7 +96,7 @@ const UserFrom = () => {
           type="text"
           placeholder="XYZ  College"
           value={collegeName}
-          onChange={(e) =>  setCollegeName(e.target.value)}
+          onChange={(e) => setCollegeName(e.target.value)}
         />
 
         <label>Enter 10th Marks</label>
@@ -99,8 +123,8 @@ const UserFrom = () => {
           onChange={(e) => setBtechMarks(e.target.value)}
         />
 
-        <p> Upload the Resume </p> 
-        <FileUpload/>
+        <p> Upload the Resume </p>
+        <FileUpload />
         <button type="submit">Submit</button>
       </form>
     </>

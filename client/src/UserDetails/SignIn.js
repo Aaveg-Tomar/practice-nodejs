@@ -9,22 +9,17 @@ const SignIn = () => {
 
     const history = useNavigate();
 
-    // useEffect(()=>{
-    //     const localdata = localStorage.getItem('token');
-    //     if(localdata){
-    //       history('/dashboard');       
+ 
+    // useEffect(() => {
+        
+    //     const token = Cookies.get('jwt');
+    //     console.log(token);
+    //     console.log('hellll');
+        
+    //     if (token) {
+    //         history('/dashboard');
     //     }
-    //   },[])
-    useEffect(() => {
-        
-        const token = Cookies.get('jwt');
-        console.log(token);
-        console.log('hellll');
-        
-        if (token) {
-            history('/dashboard');
-        }
-    }, [history]);
+    // }, [history]);
 
    
     
