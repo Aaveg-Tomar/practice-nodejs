@@ -12,7 +12,10 @@ const PORT = 8000;
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // Adjust this to match your frontend URL
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookie());
 
