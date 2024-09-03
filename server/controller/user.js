@@ -109,6 +109,7 @@ const handleUserGettingInformation = async(req , res) =>{
         if (!availableUser) {
             return res.json({ status: 'error', user: false });
         }
+        console.log(availableUser)
     
         
         return res.json({ status: 'ok', user: true, details: availableUser });

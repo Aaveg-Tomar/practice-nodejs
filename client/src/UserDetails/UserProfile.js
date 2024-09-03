@@ -9,7 +9,7 @@ const UserProfile = () => {
 
   const [userDetails, setUserDetails] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+ 
 
   useEffect(()=>{
     const userlogin =  localStorage.getItem('token')
@@ -27,9 +27,10 @@ const UserProfile = () => {
       console.log(userDetails);
   } else {
       setError('Error fetching user details');
+      console.log(error);
   }
     }
-  })
+  },[])
 
   
 
