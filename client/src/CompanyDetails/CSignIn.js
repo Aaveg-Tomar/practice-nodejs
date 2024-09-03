@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import  { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const CSignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    
     const history = useNavigate();
 
     useEffect(()=>{
@@ -15,25 +17,21 @@ const CSignIn = () => {
       },[])
 
     const loginUser = async(e) =>{
-        e.preventDefault()
-        const response = await fetch('http://localhost:8000/api/clogin' , {
-            method: 'POST',
-            headers : {
-                'Content-Type' : 'application/json'
-            },
+        e.preventDefault();
 
-            body : JSON.stringify({
-                email,
-                password,
-            })
-        })
+        const dataSend = {
+            email ,  password
+    
+        }
+    
+        const response=await axios.post('http://localhost:8000/api/clogin',dataSend, {
+            withCredentials: true // Make sure to include credentials in the request
+        });
 
-        const data = await response.json();
-        console.log(data)
         
 
-        if(data.status === true){
-            localStorage.setItem('token', data.token);
+        if(response.data.status === true){
+            localStorage.setItem('token', response.data.token);
             
             alert("Login Sccessfull");
             window.location.href = '/dashboard'
@@ -41,7 +39,7 @@ const CSignIn = () => {
             alert("check username or password")
         }
         
-        console.log(data);
+        
     }
 
 

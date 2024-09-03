@@ -45,21 +45,10 @@ const UserFrom = () => {
     };
 
     try {
-      // const token = Cookies.get('jwt');
-      // const response = await fetch('http://localhost:8000/api/userform', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Authorization': `Bearer ${token}`
-      //   },
-      //   body: JSON.stringify(data),
-      // });
       const response=await axios.post('http://localhost:8000/api/userform',data, {
         withCredentials: true
     });
 
-
-      // const userres = await response.json();
       if (response.data.status === 'ok') {
         console.log('User details saved:', response.data.user);
         navigate('/userProfile')

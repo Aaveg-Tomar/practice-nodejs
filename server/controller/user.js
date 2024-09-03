@@ -87,9 +87,44 @@ const handleUserDetails = async (req, res) => {
 };
 
 
+const handleUserGettingInformation = async(req , res) =>{
+    const token = req.token;
+
+    if(!token){
+        return res.json({ status: 'error', message: 'Login First' });
+    }
+
+    try {
+        
+        const findUser = await User.findOne({ token: token }); 
+        if (!findUser) {
+            return res.json({ status: 'error', user: false });
+        }
+    
+        
+        const userId = findUser._id;
+    
+        
+        const availableUser = await UserDetail.findOne({ userId: userId }).populate('userId');
+        if (!availableUser) {
+            return res.json({ status: 'error', user: false });
+        }
+    
+        
+        return res.json({ status: 'ok', user: true, details: availableUser });
+    
+    } catch (err) {
+        console.log('Error:', err);
+        return res.status(500).json({ status: 'error', message: 'Internal server error' });
+    }
+    
+
+}
+
 
 module.exports = {
     handleUserLogin,
     handleUserSignUp,
     handleUserDetails,
+    handleUserGettingInformation
 }

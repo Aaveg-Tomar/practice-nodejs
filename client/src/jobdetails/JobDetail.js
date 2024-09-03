@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const JobDetail = () => {
   const [companyName, setCompanyName] = useState('');
   const [jobDescription, setJobDescription] = useState('');
@@ -32,8 +33,19 @@ const JobDetail = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/jobdetails', jobDetails);
-      console.log(response.data);
+      const response=await axios.post('http://localhost:8000/api/jobdetails',jobDetails, {
+        withCredentials: true
+    });
+
+
+     
+      if (response.data.status === 'ok') {
+        console.log('User details saved:', );
+      } else {
+        console.log('Error saving user details');
+      }
+
+      
 
     } catch (error) {
       console.error(error);

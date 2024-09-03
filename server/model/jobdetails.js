@@ -12,6 +12,12 @@ const JobDetailSchema = new mongoose.Schema({
         required:true,
 
     },
+    // jobId : {
+    //     type: String,
+    //     required: true,
+    //     unique : true,
+    //     },
+    
     jobDescription : {
         type: String,
         required : true,
