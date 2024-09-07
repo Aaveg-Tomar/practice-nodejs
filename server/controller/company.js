@@ -112,9 +112,9 @@ const handleGettingJobs = async(req , res) =>{
             return res.json({ status: 'error', message: 'Company Not Found' });
         }
 
-        const CompanyId = findCompnay._id;
+        const companyId = findCompnay._id;
 
-        const jobsdetails = await JobDetail.find({ CompanyId: CompanyId }).populate('CompanyId');
+        const jobsdetails = await JobDetail.find({ companyId: companyId }).populate('companyId');
         console.log("jobsdetails");
         console.log(jobsdetails);
 
