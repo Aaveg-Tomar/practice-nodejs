@@ -98,6 +98,7 @@ const handleGettingJobs = async(req , res) =>{
    
 
     try {
+        
         const token = req.token;
 
         if(!token){
@@ -113,7 +114,7 @@ const handleGettingJobs = async(req , res) =>{
 
         const CompanyId = findCompnay._id;
 
-        const jobsdetails = await UserDetail.find({ CompanyId: CompanyId }).populate('CompanyId');
+        const jobsdetails = await JobDetail.find({ CompanyId: CompanyId }).populate('CompanyId');
         console.log("jobsdetails");
         console.log(jobsdetails);
 
