@@ -19,7 +19,7 @@ const UserProfile = () => {
     }
 
     const handleUserData = async() => {
-      const userdata = await axios("http://localhost:8000/api/user/details");
+      const userdata = await axios.get("http://localhost:8000/api/showjobs");
     
 
     if (userdata.data.status === 'ok') {

@@ -9,6 +9,7 @@ import UserFrom from "./UserDetails/UserFrom";
 import UserProfile from "./UserDetails/UserProfile";
 import JobDetail from "./jobdetails/JobDetail";
 import SignUp from "./UserDetails/SignUp"
+import JobsPosted from "./CompanyDetails/JobsPosted";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/userInfo" Component={UserFrom}/>
           <Route path="/userProfile" Component={UserProfile}/>
           <Route path="/jobDetails" Component={JobDetail}/>
+          <Route path= "/jobPosted" Component={JobsPosted}/>
         </Routes>
       </Router>
     </>

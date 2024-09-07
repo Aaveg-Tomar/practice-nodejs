@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const JobDetail = () => {
@@ -13,6 +14,8 @@ const JobDetail = () => {
   const [marks10th, setMarks10th] = useState('');
   const [marks12th, setMarks12th] = useState('');
   const [btechMarks, setBtechMarks] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +44,8 @@ const JobDetail = () => {
      
       if (response.data.status === 'ok') {
         console.log('User details saved:', );
+        navigate('/jobPosted')
+        
       } else {
         console.log('Error saving user details');
       }

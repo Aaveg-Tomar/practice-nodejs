@@ -28,7 +28,7 @@ const handleCompanyLogin = async (req, res) => {
 
 
 const handleCompanySignUp = async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const company = await Company.create({
             name: req.body.name,
@@ -47,7 +47,7 @@ const handleJobDetails = async (req, res) => {
 
     try {
         const token = req.token;
-        console.log(token);
+        // console.log(token);
         
         
         const companyExist = await Company.findOne({ token: token });
@@ -56,11 +56,15 @@ const handleJobDetails = async (req, res) => {
             return res.json({ status: 'error not found', user: false })
         }
 
-         
+    
+        
 
-        const jobDetails = await JobDetail.findOneAndUpdate(
-            { companyId: companyExist._id },
+        //  console.log(req.body);
+
+        const jobDetails = await JobDetail.create(
+            // { companyId: companyExist._id },
             {
+                companyId: companyExist._id ,
                 companyName: req.body.companyName,
                 jobTitle: req.body.jobTitle,
                 jobDescription: req.body.jobDescription,
@@ -73,21 +77,61 @@ const handleJobDetails = async (req, res) => {
                     btechMarks: req.body.jobEligibility.btechMarks,
                 }
             },
-            { new: true, upsert: true }
+            // { new: true, upsert: true }
 
         );
+        // console.log(jobDetails);
+        await jobDetails.save();
+        // console.log(jobDetails);
 
         const companyAvailable = await JobDetail.find({ companyId: companyExist._id }).populate('companyId');
-        console.log(companyAvailable);
+        // console.log(companyAvailable);
         res.json({ status: 'ok', user: true, companyExist : jobDetails });
 
 
     } catch (err) {
         console.log(err)
     }
-
-
 }
 
-module.exports = { handleCompanyLogin, handleCompanySignUp, handleJobDetails }
+const handleGettingJobs = async(req , res) =>{
+   
+
+    try {
+        const token = req.token;
+
+        if(!token){
+            return res.json({ status: 'error', message: 'Login First' });
+        }
+        // Find the companyexist with the token
+        const findCompnay = await Company.findOne({ token: token });
+        console.log(findCompnay);
+
+        if(!findCompnay){
+            return res.json({ status: 'error', message: 'Company Not Found' });
+        }
+
+        const CompanyId = findCompnay._id;
+
+        const jobsdetails = await UserDetail.find({ CompanyId: CompanyId }).populate('CompanyId');
+        console.log("jobsdetails");
+        console.log(jobsdetails);
+
+        if(!jobsdetails){
+            return res.json({ status: 'error', message: 'No Jobs Available' });
+        }
+
+        console.log(jobsdetails);
+
+        return  res.json({ status: 'ok', user: true, jobsdetails: jobsdetails });
+       
+    
+    } catch (err) {
+        console.log('Error:', err);
+        return res.status(500).json({ status: 'error', message: 'Internal server error' });
+    }
+    
+}
+
+module.exports = { handleCompanyLogin, handleCompanySignUp, handleJobDetails , handleGettingJobs}
 
