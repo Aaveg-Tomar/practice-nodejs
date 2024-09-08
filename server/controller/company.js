@@ -122,8 +122,6 @@ const handleGettingJobs = async(req , res) =>{
             return res.json({ status: 'error', message: 'No Jobs Available' });
         }
 
-        console.log(jobsdetails);
-
         return  res.json({ status: 'ok', user: true, jobsdetails: jobsdetails });
        
     

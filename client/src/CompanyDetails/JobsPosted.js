@@ -1,31 +1,44 @@
 import axios from 'axios';
-import React, { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
 const JobsPosted = () => {
-  const [jobDetails , setJobDetails] = useState('');
-  const [error , setError] = useState('');
+  const [jobDetails, setJobDetails] = useState(null);
+  const [error, setError] = useState(null);
 
-  useEffect(()=>{
-    
+  useEffect(() => {
+    const fetchJobsPosted = async () => {
+      try {
+        const jobdatas = await axios.get("http://localhost:8000/api/showjobs", {
+          withCredentials: true,
+        });
 
-    const fetchJobsPosted = async() => {
-      const jobdatas = await axios("http://localhost:8000/api/showjobs");
-    
+        if (jobdatas.data.status === 'ok') {
+          setJobDetails(jobdatas.data.jobsdetails); 
+        } else {
+          setError('Error fetching job details');
+        }
+      } catch (err) {
+        setError('Error fetching job details');
+        console.log(err);
+      }
+    };
 
-    if (jobdatas.data.status === 'ok') {
-      setJobDetails(jobdatas.data.details);
-      console.log(jobDetails);
-  } else {
-      setError('Error fetching user details');
-      console.log(error);
-  }
+    fetchJobsPosted();
+  }, []); 
+
+  // Track jobDetails once it's updated
+  useEffect(() => {
+    if (jobDetails) {
+      console.log("Job Details:", jobDetails);
     }
-  },[])
-
+  }, [jobDetails]); 
 
   return (
-    <div>JobsPosted</div>
-  )
-}
+    <div>
+      <h1>Jobs Posted</h1>
+      
+    </div>
+  );
+};
 
-export default JobsPosted
+export default JobsPosted;

@@ -5,21 +5,16 @@ import { useNavigate } from 'react-router-dom'
 
 const UserProfile = () => {
 
-  const navigate = useNavigate();
-
   const [userDetails, setUserDetails] = useState(null);
   const [error, setError] = useState(null);
  
 
   useEffect(()=>{
-    const userlogin =  localStorage.getItem('token')
-    if(!userlogin){
-      navigate('/signin')
-      
-    }
 
     const handleUserData = async() => {
-      const userdata = await axios.get("http://localhost:8000/api/showjobs");
+      const userdata = await axios.get("http://localhost:8000/api/user/details" , {
+        withCredentials : true,
+      });
     
 
     if (userdata.data.status === 'ok') {
@@ -30,7 +25,14 @@ const UserProfile = () => {
       console.log(error);
   }
     }
-  },[])
+    handleUserData();
+  },[]);
+
+  useEffect(() => {
+    if (userDetails) {
+      console.log("Job Details:", userDetails);
+    }
+  }, [userDetails]); 
 
   
 
@@ -39,12 +41,7 @@ const UserProfile = () => {
     <>
     <div>
       <h1>User Profile</h1>
-    </div>
-
-    <div>
-
-    </div>
-    
+    </div>    
     
     </>
   )
