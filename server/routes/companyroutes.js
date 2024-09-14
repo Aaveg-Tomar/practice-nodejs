@@ -17,4 +17,6 @@ crouter.post('/jobdetails' , authCompany , handleJobDetails);
 crouter.get('/showjobs' , authCompany , handleGettingJobs);
 
 
+
+
 module.exports = crouter;

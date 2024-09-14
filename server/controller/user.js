@@ -123,9 +123,52 @@ const handleUserGettingInformation = async(req , res) =>{
 }
 
 
+
+
+// get jobid from from end and goes to the user with help of token search token in
+
+
+const handleJobAppliedByUser = async (req, res) => {
+    const token = req.token;
+    const { jobId } = req.body;  // Assuming you're sending the jobId in the request body
+    
+    if (!token) {
+      return res.json({ status: 'error', message: 'Login First' });
+    }
+  
+    try {
+      // Find the user by their token
+      const findUser = await User.findOne({ token: token });
+  
+      if (!findUser) {
+        return res.json({ status: 'error', message: 'User not found' });
+      }
+  
+      // Check if the jobId is already in the appliedJobs array (to avoid duplicates)
+      if (findUser.appliedJobs.includes(jobId)) {
+        return res.json({ status: 'error', message: 'Job already applied' });
+      }
+  
+      // Add the jobId to the appliedJobs array
+      findUser.appliedJobs.push(jobId);
+  
+      // Save the updated user document
+      await findUser.save();
+  
+      return res.json({ status: 'ok', message: 'Job applied successfully' });
+    } catch (err) {
+      console.log('Error:', err);
+      return res.status(500).json({ status: 'error', message: 'Internal server error' });
+    }
+  };
+  
+
+
+
 module.exports = {
     handleUserLogin,
     handleUserSignUp,
     handleUserDetails,
-    handleUserGettingInformation
+    handleUserGettingInformation,
+    handleJobAppliedByUser,
 }

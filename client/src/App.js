@@ -10,6 +10,8 @@ import UserProfile from "./UserDetails/UserProfile";
 import JobDetail from "./jobdetails/JobDetail";
 import SignUp from "./UserDetails/SignUp"
 import JobsPosted from "./CompanyDetails/JobsPosted";
+import JobList from "./jobdetails/JobList";
+import AppliedJobs from "./jobdetails/AppliedJobs";
 
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
           <Route path="/userProfile" Component={UserProfile}/>
           <Route path="/jobDetails" Component={JobDetail}/>
           <Route path= "/jobPosted" Component={JobsPosted}/>
+          <Route path="/jobList" Component={JobList}/>
+          <Route path="/appliedjobs" Component={AppliedJobs}/>
         </Routes>
       </Router>
     </>

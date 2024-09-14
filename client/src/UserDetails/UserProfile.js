@@ -30,7 +30,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (userDetails) {
-      console.log("Job Details:", userDetails);
+      console.log("User Details:", userDetails);
     }
   }, [userDetails]); 
 
