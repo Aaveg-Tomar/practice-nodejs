@@ -16,7 +16,7 @@ crouter.post('/cregister',handleCompanySignUp);
 crouter.post('/clogin' , handleCompanyLogin);
 crouter.post('/jobdetails' , authCompany , handleJobDetails);
 
-crouter.get('/applicantDetails' , authCompany , handleApplicantsListOnJob);
+crouter.post('/applicantDetails' , authCompany , handleApplicantsListOnJob);
 crouter.get('/showjobs' , authCompany , handleGettingJobs);
 
 

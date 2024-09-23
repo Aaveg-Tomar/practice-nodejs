@@ -46,7 +46,7 @@ const JobsPosted = () => {
   const handleApplicantsListOnJob = async(jobId) =>{
     console.log("Applicants List on Job");
     try {
-      const response = await axios.get("http://localhost:8000/api/applicantDetails", {
+      const response = await axios.post("http://localhost:8000/api/applicantDetails", {
         jobId: jobId,
       }, {
         withCredentials: true,

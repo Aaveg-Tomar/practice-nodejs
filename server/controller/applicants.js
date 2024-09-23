@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {ApplicantDetails} = require('../model/applicant');
-const {User} = require('../model/user')
+const {User} = require('../model/user');
+const {UserDetail} = require('../model/userdetail')
 
 const handleJobAppliedByUser = async (req, res) => {
     const token = req.token;
@@ -68,9 +69,11 @@ const handleJobAppliedByUser = async (req, res) => {
   
       //  Extract userIds from the found applicants
       const applicantUserIds = findApplicants.map(applicant => applicant.userId);
+      console.log(applicantUserIds);
   
       //  Fetch details of all users using their userIds
-      const applicantsDetails = await UserDetail.find({ _id: { $in: applicantUserIds } });
+      const applicantsDetails = await UserDetail.find({ userId: { $in: applicantUserIds } });
+      console.log(applicantsDetails);
   
      
       return res.json({ status: 'ok', applicants: applicantsDetails });
