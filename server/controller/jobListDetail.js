@@ -45,8 +45,6 @@ const handleGettingAppliedJobsDetails = async (req, res) => {
   
 
 
-
-
 module.exports = {
     handleGettingJobList,
     handleGettingAppliedJobsDetails,
