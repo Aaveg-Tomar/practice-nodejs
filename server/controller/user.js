@@ -139,10 +139,28 @@ const handleJobAppliedByUser = async (req, res) => {
     try {
       // Find the user by their token
       const findUser = await User.findOne({ token: token });
+      const userId = findUser._id;
   
       if (!findUser) {
         return res.json({ status: 'error', message: 'User not found' });
       }
+
+      const userDetails = await UserDetail.findOne({ userId: userId });
+        if (!userDetails) {
+            return res.json({ status: 'error', message: 'User details not found' });
+        }
+
+      const { marks10th, marks12th, btechMarks } = jobDetails.jobEligibility;
+        if (
+            (marks10th && userDetails.marks10th < marks10th) ||
+            (marks12th && userDetails.marks12th < marks12th) ||
+            (btechMarks && userDetails.btechMarks < btechMarks)
+        ) {
+            return res.json({
+                status: 'error',
+                message: 'You do not meet the eligibility criteria for this job',
+            });
+        }
   
       // Check if the jobId is already in the appliedJobs array (to avoid duplicates)
       if (findUser.appliedJobs.includes(jobId)) {
